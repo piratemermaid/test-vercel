@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import axios from "axios";
+
+import "./App.css";
+
+type Data = {
+    test: Record<string, string | number | string[]>;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [data, setData] = React.useState<Data | null>(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    React.useEffect(() => {
+        async function fetchData() {
+            const result = await axios.get("http://localhost:3000/api");
+            setData(result.data);
+
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1500);
+        }
+
+        fetchData();
+    }, []);
+
+    return (
+        <div>
+            <h1>Test!</h1>
+            {data && !isLoading ? (
+                Object.keys(data.test).map((key) => {
+                    const value = data.test[key];
+
+                    return (
+                        <div key={key}>
+                            <p>
+                                <b>{key}:</b> {JSON.stringify(value)}
+                            </p>
+                        </div>
+                    );
+                })
+            ) : isLoading ? (
+                <p>Loading....</p>
+            ) : (
+                <p>No data</p>
+            )}
+        </div>
+    );
 }
 
-export default App
+export default App;
