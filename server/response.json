@@ -1,0 +1,11 @@
+{
+    "test": {
+        "animals": ["cat", "dog", "fish", "bird"],
+        "name": "Luna Lovegood",
+        "number": 22,
+        "object": {
+            "key": "property",
+            "thing": "stuff"
+        }
+    }
+}

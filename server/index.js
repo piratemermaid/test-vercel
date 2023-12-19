@@ -1,9 +1,12 @@
+const fs = require("fs");
+
 const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.get("/", (_req, res) => {
+    const testResponse = fs.readFileSync("server/response.json");
+    res.send(JSON.parse(testResponse));
 });
 
 app.listen(port, () => {
