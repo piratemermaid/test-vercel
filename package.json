@@ -2,7 +2,8 @@
     "scripts": {
         "client": "npm run dev --prefix client",
         "server": "nodemon index.js --prefix server",
-        "start": "concurrently \"npm run server\" \"npm run client\""
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "vercel-build": "npm i --prefix client && npm i --prefix server"
     },
     "devDependencies": {
         "concurrently": "^8.2.2",
